@@ -22,14 +22,17 @@ history <- presentations %>%
   arrange(Year) %>%
   as.data.frame()
 
-# Display bar chart
+# Display line chart
 plot_ly(
   data = history,
   x = ~Year,
   y = ~Count,
   mode = "lines")%>%
   layout(
-    title = "Count of Presentations by Year")
+    title = "Count of Presentations by Year",
+    yaxis = list(
+      range = c(0, max(history$Count))))
+    ))
 
 
 
