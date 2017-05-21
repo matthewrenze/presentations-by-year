@@ -1,0 +1,99 @@
+---
+title: "Presentations by Year"
+author: "Matthew Renze"
+date: "May 21, 2017"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Introduction
+
+The following is data visualization of the number of public presentations that I have given (or am scheduled to give) at software and technology conferences each year as of May 21, 2017.
+
+## Data Visualization
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+# Load packages
+library(plotly)
+library(lubridate)
+library(dplyr)
+
+# Set working directory
+setwd("C:/Work/School/Products/Projects/Project 3")
+
+# Load presentation data
+presentations <- read.csv("Presentations.csv")
+
+# Convert date 
+presentations$Date <- as.Date(
+  x = presentations$Date,
+  format = "%m/%d/%Y")
+
+# Transform data
+history <- presentations %>%
+  select(Date) %>%
+  group_by(Year = year(Date)) %>%
+  summarize(Count = n()) %>%
+  arrange(Year) %>%
+  as.data.frame()
+
+# Display bar chart
+plot_ly(
+  data = history,
+  x = ~Year,
+  y = ~Count,
+  mode = "lines")%>%
+  layout(
+    title = "Count of Presentations by Year")
+```
+
+## Code
+
+To create this data visualization, I used the following code.
+
+```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+# Load packages
+library(plotly)
+library(lubridate)
+library(dplyr)
+
+# Set working directory
+setwd("C:/Work/School/Products/Projects/Project 3")
+
+# Load presentation data
+presentations <- read.csv("Presentations.csv")
+
+# Convert date 
+presentations$Date <- as.Date(
+  x = presentations$Date,
+  format = "%m/%d/%Y")
+
+# Transform data
+history <- presentations %>%
+  select(Date) %>%
+  group_by(Year = year(Date)) %>%
+  summarize(Count = n()) %>%
+  arrange(Year) %>%
+  as.data.frame()
+
+# Display bar chart
+plot_ly(
+  data = history,
+  x = ~Year,
+  y = ~Count,
+  mode = "lines")%>%
+  layout(
+    title = "Count of Presentations by Year")
+```
+
+## Conclusion
+
+Thank you for taking a look at my data visualization.
+
+For more information, please visit my website at: <http://www.matthewrenze.com>
+
+
+
